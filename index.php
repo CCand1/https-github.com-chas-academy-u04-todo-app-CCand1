@@ -28,12 +28,12 @@
                 <?php
 
 use FTP\Connection;
-
-                $servername = "localhost"; //creating connection
+                                    //creating connection
+                $servername = "db";
                 $username = "mariadb";
                 $password = "mariadb";
                 $database = "mariadb";
-
+                                    
                 $connection = new mysqli($servername,$username, $password,$database);
 
                 if ($connection->connect_error) {
@@ -51,9 +51,9 @@ use FTP\Connection;
                     echo "                
                     <tr>
                     <td>{$row['id']}</td>
-                    <td>{$row['event-namn']}</td>
+                    <td>{$row['event_namn']}</td>
                     <td>{$row['plats']}</td>
-                    <td>{$row['antal-personer-involverade']}</td>
+                    <td>{$row['antal_personer_involverade']}</td>
                     <td>{$row['datum']}</td>
                     <td>{$row['klart-datum']}</td>
                     <td>
