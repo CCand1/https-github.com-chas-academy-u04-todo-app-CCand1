@@ -4,25 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
-integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <title>Event lista</title>
 </head>
 <body>
-    <h1 id="main_title">Event Lista</h1>
-    <div class="container">
-        <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nytt Event</a> <br>
-        <table class="table table-hover table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Event</th>
-            <th>Plats</th>
-            <th>Datum</th>
-        </tr>
-    </thead>
+    
+<?php include('db.php'); ?>
+
+<h1 id="main_title">Event Lista</h1>
+<div class="container">
+    <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nytt Event</a> <br>
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event</th>
+                <th>Plats</th>
+                <th>Datum</th>
+                <th>Uppdatera</th>
+                <th>Ta bort</th>
+            </tr>
+        </thead>
+        <tbody>
     </div>
 
                 <?php
@@ -57,17 +62,33 @@ use FTP\Connection;
                     <td><?php echo $row['event_namn'];?></td>
                     <td><?php echo $row['plats'];?></td>
                     <td><?php echo $row['datum'];?></td>
+                    <td><a href="uppdatera.php?id=<?php echo $row['id'];?>" class="btn btn-success">Uppdatera</a></td>
+					<td><a href="tabort.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Ta bort</a></td>
                 </tr>
                 <?php
                 }
             }
                 ?>
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+
+        <?php
+if (isset($_GET['message'])) {
+    echo "<h6 class='mt-3 text-center'>" . $_GET['message'] . "</h6>";
+}
+
+if (isset($_GET['laggtill_msg'])) {
+    echo "<h6 class='mt-3 text-center'>" . $_GET['laggtill_msg'] . "</h6>";
+}
+
+if (isset($_GET['delete_msg'])) {
+    echo "<h6 class='mt-3 text-center'>" . $_GET['delete_msg'] . "</h6>";
+}
+?>
+
     <!-- drop down list to add -->
-    <form>
+    <form action="laggtill.php" method="post">
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -90,12 +111,14 @@ use FTP\Connection;
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
-        <input type="submit" class="btn btn-success" name="nytt_event" value="Lägg till nytt event"Lägg till nytt event>
+        <input type="submit" class="btn btn-success" name="nytt_event" value="Lägg till nytt event">
       </div>
     </div>
   </div>
 </div>
 </form>
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

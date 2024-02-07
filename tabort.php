@@ -1,12 +1,30 @@
 <?php
-require 'index.php';
+ob_start(); // Start output buffering
 
+include('db.php');
 
-//ta bort uppgift
-if (isset($_GET['delete'])) {  //<!-- create deletion-->
-    $deleteId = $_GET['delete'];
-    $stmt = $conn->prepare("DELETE FROM todos WHERE id = ?");
-    $stmt->bind_param("i", $deleteId);
-    $stmt->execute();
-    header('Location: index.php'); // Omdirigera efter borttagning
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    try {
+        $query = "DELETE FROM gora WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        // Check if deletion was successful
+        if ($stmt->rowCount() > 0) {
+            // Redirect user back to the index page
+            header('Location: index.php?delete_msg=Du tog bort eventet.');
+            exit();
+        } else {
+            die("No records were deleted.");
+        }
+    } catch (PDOException $e) {
+        die("Funkar inte: " . $e->getMessage());
+    }
 }
+
+?>
+
+<?php ob_end_flush(); // Flush the output buffer and send the content to the browser ?>
