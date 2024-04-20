@@ -1,8 +1,8 @@
 <?php
 $servername = "db";
-$username = "mariadb";
+$username = "root";
 $password = "mariadb";
-$dbname = "mariadb";
+$dbname = "gora";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
